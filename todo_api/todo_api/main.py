@@ -5,8 +5,17 @@ import uvicorn
 from fastapi import FastAPI
 from sqlmodel import Session,select
 from todo_api.models.todo import User
-
+from fastapi.middleware.cors import CORSMiddleware
 app=FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
+
+
 @app.get("/get_users")
 def get_users():
     with Session(engine) as session:
