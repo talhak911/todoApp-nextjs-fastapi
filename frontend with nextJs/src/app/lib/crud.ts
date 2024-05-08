@@ -13,10 +13,11 @@ export const  AddUserAction=async(user:string)=>{
         if (!response.ok) {
           throw new Error('Failed to add user');
         }
-    
+        return response.json()
        
       } catch (error) {
         console.error('Error adding user:', error);
+        return error
         throw error;
       }
 }

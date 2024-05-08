@@ -1,6 +1,5 @@
 import AddTodo from "@/app/components/Addtodo";
 import Image from "next/image";
-import AddUser from "./components/Adduser";
 
 export default function Home() {
   return (
@@ -11,7 +10,7 @@ export default function Home() {
       
    
     
-    <AddUser/>
+    
     
     <AddTodo/>
     </div>
