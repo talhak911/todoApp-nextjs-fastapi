@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { UserType } from '../types/commontypes';
-import { AddUserAction } from "../lib/crud";
+import { AddUserAction, GetUsersAction } from "../lib/crud";
 
 export default function AddTodo() {
   const [showAddUserField, setShowAddUserField] = useState(false);
@@ -10,18 +10,15 @@ export default function AddTodo() {
   const [users, setUsers] = useState<UserType[]>([]);
 
   useEffect(() => {
-    fetchUsers();
+    const fetchData = async () => {
+      const data = await GetUsersAction();
+      setUsers(data);
+    };
+  
+    fetchData();
+  
   }, []);
 
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch('http://127.0.0.1:8080/get_users');
-      const data = await response.json();
-      setUsers(data);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
 
   const AddUserFunction = async () => {
     try {
@@ -33,7 +30,8 @@ export default function AddTodo() {
         
         setShowAddUserField(!showAddUserField); // Hide the add user field
            
-        await fetchUsers(); // Fetch users again to update the list
+        const data=await GetUsersAction(); // Fetch users again to update the list
+        setUsers(data)
       }
     } catch (error) {
       console.error('Error adding user:', error);
