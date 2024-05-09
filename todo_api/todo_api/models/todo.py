@@ -9,3 +9,4 @@ class Todo(SQLModel,table=True):
     description: str
     is_completed: bool
     user_id: int = Field(foreign_key="user.id")
+    added_by:str

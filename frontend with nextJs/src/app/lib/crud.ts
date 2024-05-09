@@ -2,10 +2,15 @@
 export   const GetUsersAction = async () => {
   try {
     const response = await fetch('http://127.0.0.1:8080/get_users');
+    if (!response.ok){
+      
+    }
     const data = await response.json();
+  
     return data;
   } catch (error) {
     console.error('Error fetching users:', error);
+    return [{username:"failed to get users"}]
   }
 };
 
@@ -28,7 +33,7 @@ export const  AddUserAction=async(user:string)=>{
        
       } catch (error) {
         console.error('Error adding user:', error);
-        return error
+        return {message:`failed to add user ${error}`}
       }
 }
 export const GetTodosAction=async()=>{
@@ -41,7 +46,7 @@ export const GetTodosAction=async()=>{
     return response.json()
    
   } catch (error) {
-    console.error('Error adding user:', error);
-    return error
+    console.error('Error getting todos:', error);
+    return []
   }
 }

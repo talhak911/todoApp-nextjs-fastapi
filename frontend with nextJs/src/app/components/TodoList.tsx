@@ -1,14 +1,15 @@
 "use client"
 import { useEffect, useState} from "react"
-import { GetTodosAction } from "../lib/crud"
+import { GetTodosAction, } from "../lib/crud"
 import { TodoType } from "../types/commontypes"
 
 export default function TodoList(){
     const [todos,setTodos]=useState<TodoType[]>([])
     useEffect(()=>{
         const fetchTodos =async()=>{ 
-       const todos=await GetTodosAction()
-       setTodos(todos)
+       const todosData:TodoType[]=await GetTodosAction()
+    
+       setTodos(todosData)
     }
     fetchTodos()
     },[])
@@ -23,7 +24,7 @@ export default function TodoList(){
         <input type="checkbox" checked={todo.is_completed} readOnly className="mr-2" />
         <span className={todo.is_completed ? "line-through text-gray-500" : "text-gray-500"}>{todo.is_completed ? "Completed" : "Pending"}</span>
       </div>
-      <p className="text-sm text-gray-400 mt-2">Added by userid: {todo.user_id}</p>
+      <p className="text-sm text-gray-400 mt-2">Added by user id: {todo.user_id}</p>
       <button className="bg-red-500 text-white px-3 py-1 rounded-md mt-2" >Remove</button>
     </div>
             )
