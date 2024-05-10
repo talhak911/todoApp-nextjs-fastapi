@@ -2,11 +2,12 @@
 import {useRouter} from 'next/navigation'
 import { useState } from "react";
 import { AddUserAction, GetUsersAction } from "../lib/crud";
+
 export default function AddUser(){
     const [showAddUserField, setShowAddUserField] = useState(false);
     const [addUserField, setAddUserField] = useState("");
     const [response, setResponse] = useState('');
-    const router =useRouter()
+   
     const AddUserFunction = async () => {
         try {
             
@@ -18,7 +19,6 @@ export default function AddUser(){
             
             setShowAddUserField(!showAddUserField); // Hide the add user field
            
-            router.push("/") // Fetch users again to update the list
             
           }
         } catch (error) {
@@ -29,19 +29,19 @@ export default function AddUser(){
     return (
        
       <div>
-      <div className="flex max-h-15">
+      <div className="flex flex-col max-h-15 mt-2 items-center justify-center gap-2">
         <button 
           onClick={() => {
             setResponse("")
             setShowAddUserField(!showAddUserField)}}
-          className="py-2 px-3 bg-blue-500 rounded-l text-white "
+          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded "
         >
           Add user
         </button>
         {showAddUserField && 
           <>
             <input
-              className="shadow border rounded py-2 px-3 mr-4 text-grey-darker flex-grow"
+              className="shadow border rounded py-2 px-3 text-grey-darker flex-grow"
               placeholder="Enter username"
               onChange={(e) => setAddUserField(e.target.value)}
               value={addUserField}
@@ -52,6 +52,7 @@ export default function AddUser(){
             >
               Add
             </button>
+            
           </>
         }
       </div>

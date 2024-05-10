@@ -4,7 +4,7 @@ from todo_api.config.db import create_tables,engine
 import uvicorn
 from fastapi import FastAPI,HTTPException
 from sqlmodel import Session,select
-from todo_api.models.todo import User,Todo
+from todo_api.models.todo import User,Todo,TodoUpdate
 from fastapi.middleware.cors import CORSMiddleware
 app=FastAPI()
 app.add_middleware(
@@ -75,7 +75,7 @@ def remove_todo(id: int):
         except Exception as e:
             return {"message": f"Failed to delete todo {e}"}
 
-@app.put("/update_todo/{id}")
+@app.put("/update_todo")
 def update_todo(updated_todo: Todo):
     with Session(engine) as session:
         try:
@@ -85,6 +85,19 @@ def update_todo(updated_todo: Todo):
             todo.title = updated_todo.title
             todo.description = updated_todo.description
             todo.is_completed = updated_todo.is_completed
+            session.commit()
+            return {"message": "Todo updated successfully"}
+        except Exception as e:
+            return {"message": f"Failed to update todo {e}"}
+
+@app.put("/update_status")
+def update_status(updated_todo:TodoUpdate):
+    with Session(engine) as session:
+        try:
+            todo=session.get(Todo,updated_todo.todo.id)
+            if not todo:
+                raise HTTPException(status_code=404,detail="Todo not found")
+            todo.is_completed=updated_todo.status
             session.commit()
             return {"message": "Todo updated successfully"}
         except Exception as e:

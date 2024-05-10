@@ -10,3 +10,7 @@ class Todo(SQLModel,table=True):
     is_completed: bool
     user_id: int = Field(foreign_key="user.id")
     added_by:str
+
+class TodoUpdate(SQLModel):
+    status: bool
+    todo: Todo
