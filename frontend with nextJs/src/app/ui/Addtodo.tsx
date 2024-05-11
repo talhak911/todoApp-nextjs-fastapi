@@ -1,11 +1,11 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { TodoType, UserType } from '../types/commontypes';
-import { AddTodoAction, AddUserAction, GetUsersAction } from "../lib/crud";
+import { AddTodoAction,  GetUsersAction } from "../lib/crud";
 
-export default function AddTodo() {
+export default function AddTodo({myusers}:{myusers:UserType[]}) {
  
-  const [users, setUsers] = useState<UserType[]>([]);
+
   const [response,setResponse]=useState("")
   const [todo,setTodo]=useState<TodoType>(
     {title:"",
@@ -15,16 +15,16 @@ export default function AddTodo() {
     added_by:""
 }
   )
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await GetUsersAction();
-      console.log(AddTodoAction)
-      setUsers(data);
-    };
   
-    fetchData();
+//   useEffect(() => {
+//     const fetchData = async () => {
+      
+//       setUsers(myusers);
+//     };
   
-},[GetUsersAction]);
+//     fetchData();
+  
+// },[]);
 
 const addTodoFunction =async ()=>{
   
@@ -66,7 +66,7 @@ const addTodoFunction =async ()=>{
           }}
       >
         <option>Select user</option>
-        {users?.map((user, index) => (
+        {myusers?.map((user, index) => (
           <option key={index}>{user.username}:{user.id}</option>
         ))}
       </select>

@@ -1,7 +1,7 @@
 
 import { DeleteTodoAction, GetTodosAction, } from "../lib/crud"
 import { TodoType } from "../types/commontypes"
-import TodoCrud from "./todoCrud"
+import TodoCrud from "../ui/todoCrud"
 
 export default async function TodoList(){
   

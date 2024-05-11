@@ -5,10 +5,9 @@ export   const GetUsersAction = async () => {
   try {
     const response = await fetch('http://127.0.0.1:8080/get_users',{cache:"no-store"});
     if (!response.ok){
-      
+      throw new Error 
     }
     const data = await response.json();
-  
     return data;
   } catch (error) {
     console.error('Error fetching users:', error);

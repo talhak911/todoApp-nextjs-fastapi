@@ -1,7 +1,9 @@
 from sqlmodel import SQLModel,Field
+
 class User(SQLModel,table=True):
     id:int=Field(primary_key=True)
-    username:str
+    username:str =Field(min_length=3)
+
 class Todo(SQLModel,table=True):
     
     id: int = Field(primary_key=True)

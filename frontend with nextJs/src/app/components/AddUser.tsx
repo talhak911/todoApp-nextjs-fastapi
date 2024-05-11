@@ -11,10 +11,10 @@ export default function AddUser(){
     const AddUserFunction = async () => {
         try {
             
-          const response = await AddUserAction(addUserField);
-          setResponse(response.message);
-          console.log(response);
-          if (response) {
+          const res = await AddUserAction(addUserField);
+          setResponse(res.message);
+          console.log(res);
+          if (res) {
             setAddUserField(''); // Clear input field
             
             setShowAddUserField(!showAddUserField); // Hide the add user field

@@ -1,7 +1,7 @@
-import AddTodo from "@/app/components/Addtodo";
-import Image from "next/image";
+
 import TodoList from "./components/TodoList";
 import AddUser from "./components/AddUser";
+import AddTodoWithUsers from "./components/addTodosWithUsers";
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
         <h1 className="text-grey-darkest text-3xl font-bold">Todo List</h1>
         <div className="mt-4">
           <AddUser />
-          <AddTodo />
+          <AddTodoWithUsers />
         </div>
       </div>
       <TodoList />
