@@ -5,7 +5,7 @@ import { AddTodoAction,  GetUsersAction } from "../lib/crud";
 
 export default function AddTodo({myusers}:{myusers:UserType[]}) {
  
-
+  const [pending,setPending]=useState(false)
   const [response,setResponse]=useState("")
   const [todo,setTodo]=useState<TodoType>(
     {title:"",
@@ -29,24 +29,23 @@ export default function AddTodo({myusers}:{myusers:UserType[]}) {
 const addTodoFunction =async ()=>{
   
   try {
-            
+    setPending(true) 
     const response = await AddTodoAction(todo);
     setResponse(response.message);
   
     if (response) {
-      setTodo({title:"",
+      setTodo({...todo,title:"",
       description:"",
       is_completed: false,
-      user_id: 0,
       added_by:""}); // Clear input field
-      
-    
-     
       
     }
   } catch (error) {
       
     console.error('Error adding user:', error);
+  }
+  finally { 
+    setPending(false)
   }
 };
 
@@ -76,6 +75,7 @@ const addTodoFunction =async ()=>{
         onChange={(e)=>{
           setTodo({...todo,title:e.target.value})
         }}
+        value={todo.title}
       />
     </div>
     
@@ -85,9 +85,18 @@ const addTodoFunction =async ()=>{
       onChange={(e)=>{
         setTodo({...todo,description:e.target.value})
       }}
+      value={todo.description}
     />
+    {pending && <div
+  className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]"
+  role="status">
+  <span
+    className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+    >Loading...</span>
+</div>}
     <button 
     onClick={()=>{addTodoFunction()}}
+    disabled={pending}
     className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded">
       Add
     </button>
